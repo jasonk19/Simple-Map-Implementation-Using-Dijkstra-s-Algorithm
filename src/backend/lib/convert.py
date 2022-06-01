@@ -15,3 +15,13 @@ def convert(file):
 
   list_collection = collection.getCollection()
   return list_collection
+
+def getNodes(file):
+  lines = file.replace(" ", "").split("\n")
+  nodes = []
+  for line in lines:
+    if line[0] not in nodes:
+      nodes.append(line[0])
+    if line[1] not in nodes:
+      nodes.append(line[1])
+  return nodes
