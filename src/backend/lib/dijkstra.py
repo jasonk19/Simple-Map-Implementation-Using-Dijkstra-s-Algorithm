@@ -25,8 +25,19 @@ class Dijkstra:
           if (connection.first.node in self.path and connection.second.node in self.path) == False:
             heapq.heappush(pq, connection)
             self.iteration += 1
-          
-      first_element = heapq.heappop(pq)
+
+      in_pq = False
+      dest_connection = None
+      for connection in pq:
+        if connection.second.node == self.dest.node:
+          in_pq = True
+          dest_connection = connection
+
+      if in_pq:
+        first_element = dest_connection
+      else:
+        first_element = heapq.heappop(pq)    
+
       first_element_to_string = first_element.first.node + " -> " + first_element.second.node + " = " + str(first_element.cost) + ", "
       self.steps += first_element_to_string
       self.collection.remove(first_element)
@@ -36,7 +47,7 @@ class Dijkstra:
         self.path.append(first_element.first.node)
       self.total_cost += first_element.cost
       pq.clear()
-    self.exec_time = round((time.time() - start_time), 2) 
+    self.exec_time = time.time() - start_time
     return self.path, self.total_cost, self.iteration, self.exec_time, self.steps
 
   def solveBerarah(self):
@@ -50,8 +61,19 @@ class Dijkstra:
         if connection.first.node == self.path[-1]:
           heapq.heappush(pq, connection)
           self.iteration += 1
-          
-      first_element = heapq.heappop(pq)
+      
+      in_pq = False
+      dest_connection = None
+      for connection in pq:
+        if connection.second.node == self.dest.node:
+          in_pq = True
+          dest_connection = connection
+
+      if in_pq:
+        first_element = dest_connection
+      else:
+        first_element = heapq.heappop(pq)
+      
       first_element_to_string = first_element.first.node + " -> " + first_element.second.node + " = " + str(first_element.cost) + ", "
       self.steps += first_element_to_string
       self.collection.remove(first_element)
@@ -59,7 +81,7 @@ class Dijkstra:
         self.path.append(first_element.second.node)
       self.total_cost += first_element.cost
       pq.clear()
-    self.exec_time = round((time.time() - start_time), 2) 
+    self.exec_time = time.time() - start_time
     return self.path, self.total_cost, self.iteration, self.exec_time, self.steps
 
   def print(self):
